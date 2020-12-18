@@ -7,7 +7,7 @@ repos:
       - id: black
         name: black
         language: system
-        entry: black
+        entry: tan
         require_serial: true
         types: [python]
 
