@@ -20,7 +20,7 @@ import click
 
 
 WINDOWS = system() == "Windows"
-BLACK_BINARY = "black.exe" if WINDOWS else "black"
+BLACK_BINARY = "tan.exe" if WINDOWS else "tan"
 GIT_BIANRY = "git.exe" if WINDOWS else "git"
 LOG = logging.getLogger(__name__)
 
