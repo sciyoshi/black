@@ -1958,7 +1958,9 @@ class LineGenerator(Visitor[Line]):
             return  # Line is empty, don't emit. Creating a new one unnecessary.
 
         complete_line = self.current_line
-        self.current_line = Line(depth=complete_line.depth + indent, use_tabs=self.use_tabs)
+        self.current_line = Line(
+            depth=complete_line.depth + indent, use_tabs=self.use_tabs
+        )
         yield complete_line
 
     def visit_default(self, node: LN) -> Iterator[Line]:
@@ -5042,7 +5044,9 @@ def delimiter_split(line: Line, features: Collection[Feature] = ()) -> Iterator[
             yield current_line
 
             current_line = Line(
-                depth=line.depth, use_tabs=line.use_tabs, inside_brackets=line.inside_brackets
+                depth=line.depth,
+                use_tabs=line.use_tabs,
+                inside_brackets=line.inside_brackets,
             )
             current_line.append(leaf)
 
@@ -5068,7 +5072,9 @@ def delimiter_split(line: Line, features: Collection[Feature] = ()) -> Iterator[
             yield current_line
 
             current_line = Line(
-                depth=line.depth, use_tabs=line.use_tabs, inside_brackets=line.inside_brackets
+                depth=line.depth,
+                use_tabs=line.use_tabs,
+                inside_brackets=line.inside_brackets,
             )
     if current_line:
         if (
@@ -5103,7 +5109,9 @@ def standalone_comment_split(
             yield current_line
 
             current_line = Line(
-                depth=line.depth, use_tabs=line.use_tabs, inside_brackets=line.inside_brackets
+                depth=line.depth,
+                use_tabs=line.use_tabs,
+                inside_brackets=line.inside_brackets,
             )
             current_line.append(leaf)
 
