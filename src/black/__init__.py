@@ -2114,8 +2114,11 @@ class LineGenerator(Visitor[Line]):
             prefix = get_string_prefix(leaf.value)
             lead_len = len(prefix) + 3
             tail_len = -3
-            indent = " " * 4 * self.current_line.depth
-            docstring = fix_docstring(leaf.value[lead_len:tail_len], indent)
+            indent_style = " " * 4 if not self.use_tabs else "\t"
+            indent = indent_style * self.current_line.depth
+            docstring = fix_docstring(
+                leaf.value[lead_len:tail_len], indent, not self.use_tabs
+            )
             if docstring:
                 if leaf.value[lead_len - 1] == docstring[0]:
                     docstring = " " + docstring
@@ -6853,11 +6856,14 @@ def lines_with_leading_tabs_expanded(s: str) -> List[str]:
     return lines
 
 
-def fix_docstring(docstring: str, prefix: str) -> str:
+def fix_docstring(docstring: str, prefix: str, expand_leading_tabs: bool) -> str:
     # https://www.python.org/dev/peps/pep-0257/#handling-docstring-indentation
     if not docstring:
         return ""
-    lines = lines_with_leading_tabs_expanded(docstring)
+    if expand_leading_tabs:
+        lines = lines_with_leading_tabs_expanded(docstring)
+    else:
+        lines = docstring.splitlines()
     # Determine minimum indentation (first line doesn't count):
     indent = sys.maxsize
     for line in lines[1:]:
